@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuenta regresiva</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      flex-direction: column;
+    }
+    #contador {
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    #qr {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="contador"></div>
+  <div id="qr">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://labrecha.com" />
+  </div>
+
+  <script>
+    let tiempo = 24 * 60 * 60; // 24 horas en segundos
+    let contador = document.getElementById("contador");
+    let qr = document.getElementById("qr");
+
+    let intervalo = setInterval(() => {
+      let horas = Math.floor(tiempo / 3600);
+      let minutos = Math.floor((tiempo % 3600) / 60);
+      let segundos = tiempo % 60;
+      contador.innerHTML = `${horas.toString().padStart(2,'0')}:${minutos.toString().padStart(2,'0')}:${segundos.toString().padStart(2,'0')}`;
+      tiempo--;
+
+      if (tiempo < 0) {
+        clearInterval(intervalo);
+        contador.style.display = "none";
+        qr.style.display = "block";
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
